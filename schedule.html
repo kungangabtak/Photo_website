@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Event Photography | UIUC Event Photos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/schedule.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-text">UIUC<span class="accent">Event</span>Photos</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="schedule.html">Book Now</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="schedule-container">
+        <section class="page-header">
+            <h1>Book Your Event Photography</h1>
+            <p>Select your preferred date, time, and location for your UIUC event or graduation photos</p>
+        </section>
+
+        <div class="schedule-content">
+            <section class="booking-form-section">
+                <div class="form-container">
+                    <h2>Schedule Your Session</h2>
+                    <form id="booking-form" class="booking-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-type">Event Type</label>
+                            <select id="event-type" name="event-type" required>
+                                <option value="">Select event type</option>
+                                <option value="graduation">Graduation Photos</option>
+                                <option value="formal">Formal / Semi-Formal</option>
+                                <option value="greek">Greek Life Event</option>
+                                <option value="club">Club / Organization</option>
+                                <option value="sports">Sports Event</option>
+                                <option value="performance">Performance / Show</option>
+                                <option value="other">Other (specify below)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="graduation-date-group">
+                            <label for="graduation-date">Graduation Date (if applicable)</label>
+                            <input type="date" id="graduation-date" name="graduation-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="package">Photo Package</label>
+                            <select id="package" name="package" required>
+                                <option value="">Select a package</option>
+                                <option value="individual-standard">Individual Standard ($100) - 1 hour, with editing</option>
+                                <option value="event-medium">Medium Event ($200) - Up to 2 hours, with editng</option>
+                                <option value="event-large">Large Event ($300) - 4 hours, with editing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="session-date">Preferred Session Date</label>
+                            <input type="date" id="session-date" name="session-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="session-time">Preferred Time</label>
+                            <select id="session-time" name="session-time" required>
+                                <option value="">Select a time</option>
+                                <option value="morning">Morning (9:00 AM - 11:00 AM)</option>
+                                <option value="midday">Midday (11:00 AM - 1:00 PM)</option>
+                                <option value="afternoon">Afternoon (1:00 PM - 3:00 PM)</option>
+                                <option value="golden-hour">Golden Hour (Depends on season)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Preferred Campus Location</label>
+                            <select id="location" name="location" required>
+                                <option value="">Select a location</option>
+                                <option value="quad">Main Quad</option>
+                                <option value="union">Illini Union</option>
+                                <option value="bardeen">Bardeen Quad</option>
+                                <option value="arboretum">Arboretum</option>
+                                <option value="krannert">Krannert Center</option>
+                                <option value="alma">Alma Mater</option>
+                                <option value="custom">Custom Location (specify below)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="custom-location">Custom Location or Additional Details</label>
+                            <textarea id="custom-location" name="custom-location" rows="3"></textarea>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="#">terms and conditions</a></label>
+                        </div>
+                        <button type="submit" class="btn primary-btn submit-btn">Book Your Session</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="weather-section">
+                <div class="weather-container">
+                    <h2>Champaign-Urbana Weather</h2>
+                    <p class="weather-intro">Plan your perfect photo day with our live weather forecast</p>
+                    
+                    <div class="current-weather">
+                        <h3>Current Conditions</h3>
+                        <div class="weather-card" id="current-weather-card">
+                            <div class="weather-icon">
+                                <i class="fas fa-sync fa-spin"></i>
+                            </div>
+                            <div class="weather-details">
+                                <p class="temperature">Loading...</p>
+                                <p class="conditions">Please wait</p>
+                                <p class="humidity">Getting weather data</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="forecast-weather">
+                        <h3>7-Day Forecast</h3>
+                        <div class="forecast-container" id="forecast-container">
+                            <p class="loading-text">Loading forecast data...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-tips">
+                        <h3>Photo Weather Tips</h3>
+                        <ul>
+                            <li><i class="fas fa-sun"></i> <strong>Sunny days:</strong> Great for vibrant photos, but avoid harsh midday sun</li>
+                            <li><i class="fas fa-cloud"></i> <strong>Overcast days:</strong> Perfect for even lighting and no harsh shadows</li>
+                            <li><i class="fas fa-cloud-sun"></i> <strong>Golden hour:</strong> The hour after sunrise or before sunset for magical lighting</li>
+                            <li><i class="fas fa-umbrella"></i> <strong>Rain plan:</strong> We have backup indoor locations if needed</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="booking-info">
+            <h2>What to Expect</h2>
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Confirmation</h3>
+                    <p>You'll receive an email confirmation within 24 hours of booking</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>What to Bring</h3>
+                    <p>Cap and gown, casual outfit, UIUC merchandise, and props if desired</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>During the Shoot</h3>
+                    <p>Relaxed session with guidance on poses and locations</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>After the Shoot</h3>
+                    <p>Digital gallery delivered within 5 days for selection and download</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-text">UIUC<span class="accent">Event</span>Photos</span>
+                <p>Capturing memories for University of Illinois students and events since 2020</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="schedule.html">Book Now</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@uiucgradphotos.com</p>
+                <p><i class="fas fa-phone"></i> (217) 555-1234</p>
+                <div class="social-icons">
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 UIUC Grad Photos. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/weather.js"></script>
+</body>
+</html>

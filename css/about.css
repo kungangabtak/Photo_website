@@ -1,0 +1,336 @@
+/* About Page Specific Styles */
+
+.about-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 5%;
+}
+
+/* Hero Section */
+.about-hero {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 80px;
+}
+
+.about-image {
+    flex: 1;
+    text-align: center;
+}
+
+.about-image img {
+    max-width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.about-content {
+    flex: 1.5;
+}
+
+.about-content h1 {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.about-content h1 .accent {
+    color: var(--secondary-color);
+}
+
+.about-content h2 {
+    font-size: 1.3rem;
+    color: var(--gray-color);
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.about-intro {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    border-left: 3px solid var(--secondary-color);
+    padding-left: 15px;
+}
+
+.about-stats {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+.about-contact {
+    margin-bottom: 20px;
+}
+
+.contact-link {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.contact-link i {
+    color: var(--secondary-color);
+    margin-right: 10px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--light-color);
+    border-radius: 50%;
+    transition: var(--transition);
+    color: var(--primary-color);
+}
+
+.social-links a:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* Story Section */
+.about-story {
+    margin-bottom: 80px;
+    background-color: var(--light-color);
+    padding: 60px 0;
+}
+
+.about-story h2,
+.photography-approach h2,
+.my-equipment h2,
+.client-testimonials h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    font-size: 2rem;
+}
+
+.story-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.story-content p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* Photography Approach Section */
+.photography-approach {
+    margin-bottom: 80px;
+}
+
+.approach-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.approach-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.approach-card:hover {
+    transform: translateY(-10px);
+}
+
+.approach-icon {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+.approach-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* Equipment Section */
+.my-equipment {
+    margin-bottom: 80px;
+    background-color: var(--light-color);
+    padding: 60px 0;
+}
+
+.equipment-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.equipment-text {
+    flex: 1.5;
+}
+
+.equipment-image {
+    flex: 1;
+}
+
+.equipment-image img {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-width: 100%;
+}
+
+.equipment-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.equipment-list li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+}
+
+.equipment-list i {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    color: var(--secondary-color);
+}
+
+/* Testimonials Section */
+.client-testimonials {
+    margin-bottom: 80px;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+}
+
+.testimonial-content p {
+    font-style: italic;
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.testimonial-content p::before {
+    content: '"';
+    font-size: 3rem;
+    color: var(--secondary-color);
+    opacity: 0.2;
+    position: absolute;
+    left: 0;
+    top: -20px;
+}
+
+.testimonial-content h4 {
+    color: var(--gray-color);
+    text-align: right;
+}
+
+/* CTA Section */
+.cta-section {
+    background-color: var(--primary-color);
+    padding: 60px 0;
+    margin-bottom: 40px;
+    border-radius: var(--border-radius);
+}
+
+.cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 2rem;
+}
+
+.cta-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.cta-content .btn {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .about-hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .about-image {
+        margin-bottom: 30px;
+    }
+    
+    .about-stats {
+        justify-content: center;
+    }
+    
+    .about-contact {
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .equipment-content {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+    
+    .equipment-list li {
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .approach-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
