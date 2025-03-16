@@ -43,11 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Feature Carousel functionality
     const carouselContainer = document.querySelector('.carousel-container');
-    const carouselDots = document.querySelectorAll('.carousel-dot');
+    const carouselIndicators = document.querySelector('.carousel-indicators');
     const carouselPrev = document.querySelector('.carousel-prev');
     const carouselNext = document.querySelector('.carousel-next');
-    
-    if (carouselContainer) {
+
+    if (carouselContainer && carouselIndicators) {
         const cardWidth = 330; // Card width + margin
         let currentIndex = 0;
         const totalCards = document.querySelectorAll('.carousel-container .feature-card').length;
@@ -66,10 +66,37 @@ document.addEventListener('DOMContentLoaded', function() {
         let visibleCards = getVisibleCards();
         let maxIndex = Math.max(0, totalCards - visibleCards);
         
+        // Create the correct number of dots
+        function setupIndicators() {
+            // Clear existing dots
+            carouselIndicators.innerHTML = '';
+            
+            // Calculate how many pages we need
+            const pageCount = Math.ceil(totalCards / visibleCards);
+            
+            // Create a dot for each page
+            for (let i = 0; i < pageCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot';
+                if (i === 0) dot.classList.add('active');
+                
+                // Add click event to each dot
+                dot.addEventListener('click', () => {
+                    currentIndex = i * visibleCards;
+                    if (currentIndex > maxIndex) currentIndex = maxIndex;
+                    updateCarousel();
+                    resetTimer();
+                });
+                
+                carouselIndicators.appendChild(dot);
+            }
+        }
+        
         // Update on window resize
         window.addEventListener('resize', () => {
             visibleCards = getVisibleCards();
             maxIndex = Math.max(0, totalCards - visibleCards);
+            setupIndicators(); // Recreate indicators when screen size changes
             updateCarousel();
         });
         
@@ -78,9 +105,11 @@ document.addEventListener('DOMContentLoaded', function() {
             carouselContainer.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
             
             // Update active dot
+            const carouselDots = document.querySelectorAll('.carousel-dot');
             if (carouselDots.length) {
+                const activeDotIndex = Math.floor(currentIndex / visibleCards);
                 carouselDots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === Math.min(Math.floor(currentIndex / visibleCards), carouselDots.length - 1));
+                    dot.classList.toggle('active', index === activeDotIndex);
                 });
             }
         }
@@ -125,19 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Dot navigation
-        if (carouselDots.length) {
-            carouselDots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentIndex = index * visibleCards;
-                    if (currentIndex > maxIndex) currentIndex = maxIndex;
-                    updateCarousel();
-                    resetTimer();
-                });
-            });
-        }
-        
         // Initialize
+        setupIndicators();
         updateCarousel();
     }
     
