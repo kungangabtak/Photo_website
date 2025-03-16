@@ -41,6 +41,92 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    function initVerticalCarousel() {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentIndex = 0;
+        let interval;
+        
+        // Function to update carousel to show specific slide
+        function updateCarousel(index) {
+            // Remove active class from all slides and indicators
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(dot => dot.classList.remove('active'));
+            
+            // Add active class to current slide and indicator
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentIndex = index;
+        }
+        
+        // Function to advance to next slide
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel(currentIndex);
+        }
+        
+        // Set up auto rotation
+        function startInterval() {
+            interval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        }
+        
+        // Reset timer when user interacts
+        function resetInterval() {
+            clearInterval(interval);
+            startInterval();
+        }
+        
+        // Set up click handler for indicators
+        indicators.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                updateCarousel(index);
+                resetInterval();
+            });
+        });
+        
+        // Add swipe functionality for mobile
+        const carousel = document.querySelector('.vertical-carousel');
+        let startY, endY;
+        
+        carousel.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+        }, false);
+        
+        carousel.addEventListener('touchend', function(e) {
+            endY = e.changedTouches[0].clientY;
+            handleSwipe();
+        }, false);
+        
+        function handleSwipe() {
+            // Calculate swipe distance
+            const swipeDistance = startY - endY;
+            
+            // If sufficient swipe up, go to next slide
+            if (swipeDistance > 50) {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateCarousel(currentIndex);
+                resetInterval();
+            }
+            // If sufficient swipe down, go to previous slide
+            else if (swipeDistance < -50) {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateCarousel(currentIndex);
+                resetInterval();
+            }
+        }
+        
+        // Initialize first slide and start auto rotation
+        updateCarousel(0);
+        startInterval();
+    }
+    
+    // Call the function if the carousel exists
+    if (document.querySelector('.vertical-carousel')) {
+        initVerticalCarousel();
+    }
+    
     // Feature Carousel functionality
     const carouselContainer = document.querySelector('.carousel-container');
     const carouselIndicators = document.querySelector('.carousel-indicators');
