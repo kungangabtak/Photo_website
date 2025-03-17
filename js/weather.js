@@ -1,9 +1,8 @@
-// Weather integration for UIUC Grad Photos website
-// Uses OpenWeatherMap API to display current weather and forecast
+// Enhanced weather integration for UIUC Grad Photos website
+// Replace existing weather.js with this improved version
 
 document.addEventListener('DOMContentLoaded', function() {
     // Constants
-    const WEATHER_API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your actual API key
     const CHAMPAIGN_LAT = 40.1164; // Champaign-Urbana coordinates
     const CHAMPAIGN_LON = -88.2434;
     const UNITS = 'imperial'; // Use imperial units for the US (Fahrenheit)
@@ -34,34 +33,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentWeatherCard = document.getElementById('current-weather-card');
     const forecastContainer = document.getElementById('forecast-container');
     
+    // Config object for API settings - should be loaded from environment variables in production
+    const config = {
+        apiKey: '', // API key should be stored server-side and not in client JavaScript
+        useRealData: false, // Set to true to use actual API, false for mock data
+        apiEndpoint: 'https://api.openweathermap.org/data/2.5/'
+    };
+    
     // Function to fetch current weather data
     const fetchCurrentWeather = async () => {
         try {
-            // For development/demo purposes, use mock data
-            // In production, uncomment the fetch code and use your actual API key
+            let data;
             
-            // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${CHAMPAIGN_LAT}&lon=${CHAMPAIGN_LON}&units=${UNITS}&appid=${WEATHER_API_KEY}`);
-            // const data = await response.json();
-            
-            // Mock data for development
-            const data = {
-                main: {
-                    temp: 72.5,
-                    feels_like: 71.8,
-                    humidity: 65
-                },
-                weather: [
-                    {
-                        id: 800,
-                        main: 'Clear',
-                        description: 'clear sky',
-                        icon: '01d'
-                    }
-                ],
-                wind: {
-                    speed: 5.82
+            if (config.useRealData && config.apiKey) {
+                const url = `${config.apiEndpoint}weather?lat=${CHAMPAIGN_LAT}&lon=${CHAMPAIGN_LON}&units=${UNITS}&appid=${config.apiKey}`;
+                const response = await fetch(url);
+                data = await response.json();
+                
+                if (data.cod !== 200) {
+                    throw new Error('API Error: ' + data.message);
                 }
-            };
+            } else {
+                // Mock data for development/demo
+                data = getMockCurrentWeather();
+            }
             
             updateCurrentWeather(data);
         } catch (error) {
@@ -73,65 +68,98 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch forecast data
     const fetchForecast = async () => {
         try {
-            // For development/demo purposes, use mock data
-            // In production, uncomment the fetch code and use your actual API key
+            let data;
             
-            // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${CHAMPAIGN_LAT}&lon=${CHAMPAIGN_LON}&units=${UNITS}&appid=${WEATHER_API_KEY}`);
-            // const data = await response.json();
-            
-            // Mock data for development
-            const data = {
-                list: [
-                    // Day 1
-                    {
-                        dt: new Date().setHours(0, 0, 0, 0) / 1000 + 86400,
-                        main: { temp: 75.2 },
-                        weather: [{ description: 'sunny', icon: '01d' }]
-                    },
-                    // Day 2
-                    {
-                        dt: new Date().setHours(0, 0, 0, 0) / 1000 + 172800,
-                        main: { temp: 73.4 },
-                        weather: [{ description: 'partly cloudy', icon: '02d' }]
-                    },
-                    // Day 3
-                    {
-                        dt: new Date().setHours(0, 0, 0, 0) / 1000 + 259200,
-                        main: { temp: 68.9 },
-                        weather: [{ description: 'light rain', icon: '10d' }]
-                    },
-                    // Day 4
-                    {
-                        dt: new Date().setHours(0, 0, 0, 0) / 1000 + 345600,
-                        main: { temp: 71.6 },
-                        weather: [{ description: 'cloudy', icon: '03d' }]
-                    },
-                    // Day 5
-                    {
-                        dt: new Date().setHours(0, 0, 0, 0) / 1000 + 432000,
-                        main: { temp: 77.0 },
-                        weather: [{ description: 'clear', icon: '01d' }]
-                    },
-                    // Day 6
-                    {
-                        dt: new Date().setHours(0, 0, 0, 0) / 1000 + 518400,
-                        main: { temp: 79.2 },
-                        weather: [{ description: 'sunny', icon: '01d' }]
-                    },
-                    // Day 7
-                    {
-                        dt: new Date().setHours(0, 0, 0, 0) / 1000 + 604800,
-                        main: { temp: 74.5 },
-                        weather: [{ description: 'partly cloudy', icon: '02d' }]
-                    }
-                ]
-            };
+            if (config.useRealData && config.apiKey) {
+                const url = `${config.apiEndpoint}forecast?lat=${CHAMPAIGN_LAT}&lon=${CHAMPAIGN_LON}&units=${UNITS}&appid=${config.apiKey}`;
+                const response = await fetch(url);
+                data = await response.json();
+                
+                if (data.cod !== '200') {
+                    throw new Error('API Error: ' + data.message);
+                }
+            } else {
+                // Mock data for development/demo
+                data = getMockForecast();
+            }
             
             updateForecast(data);
         } catch (error) {
             console.error('Error fetching forecast:', error);
             displayForecastError();
         }
+    };
+    
+    // Function to get mock current weather data
+    const getMockCurrentWeather = () => {
+        return {
+            main: {
+                temp: 72.5,
+                feels_like: 71.8,
+                humidity: 65
+            },
+            weather: [
+                {
+                    id: 800,
+                    main: 'Clear',
+                    description: 'clear sky',
+                    icon: '01d'
+                }
+            ],
+            wind: {
+                speed: 5.82
+            }
+        };
+    };
+    
+    // Function to get mock forecast data
+    const getMockForecast = () => {
+        return {
+            list: [
+                // Day 1
+                {
+                    dt: new Date().setHours(0, 0, 0, 0) / 1000 + 86400,
+                    main: { temp: 75.2 },
+                    weather: [{ description: 'sunny', icon: '01d' }]
+                },
+                // Day 2
+                {
+                    dt: new Date().setHours(0, 0, 0, 0) / 1000 + 172800,
+                    main: { temp: 73.4 },
+                    weather: [{ description: 'partly cloudy', icon: '02d' }]
+                },
+                // Day 3
+                {
+                    dt: new Date().setHours(0, 0, 0, 0) / 1000 + 259200,
+                    main: { temp: 68.9 },
+                    weather: [{ description: 'light rain', icon: '10d' }]
+                },
+                // Day 4
+                {
+                    dt: new Date().setHours(0, 0, 0, 0) / 1000 + 345600,
+                    main: { temp: 71.6 },
+                    weather: [{ description: 'cloudy', icon: '03d' }]
+                },
+                // Day 5
+                {
+                    dt: new Date().setHours(0, 0, 0, 0) / 1000 + 432000,
+                    main: { temp: 77.0 },
+                    weather: [{ description: 'clear', icon: '01d' }]
+                },
+                // Day 6
+                {
+                    dt: new Date().setHours(0, 0, 0, 0) / 1000 + 518400,
+                    main: { temp: 79.2 },
+                    weather: [{ description: 'sunny', icon: '01d' }]
+                },
+                // Day 7
+                {
+                    dt: new Date().setHours(0, 0, 0, 0) / 1000 + 604800,
+                    main: { temp: 74.5 },
+                    weather: [{ description: 'partly cloudy', icon: '02d' }]
+                }
+            ]
+        };
     };
     
     // Function to update current weather display
@@ -148,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         currentWeatherCard.innerHTML = `
             <div class="weather-icon">
-                <i class="${iconClass}"></i>
+                <i class="${iconClass}" aria-hidden="true"></i>
             </div>
             <div class="weather-details">
                 <p class="temperature">${temp}°F</p>
@@ -179,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="forecast-day">
                     <p class="forecast-date">${dayName}</p>
                     <div class="forecast-icon">
-                        <i class="${iconClass}"></i>
+                        <i class="${iconClass}" aria-hidden="true"></i>
                     </div>
                     <p class="forecast-temp">${temp}°F</p>
                     <p class="forecast-conditions">${capitalizeFirstLetter(description)}</p>
@@ -194,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const displayWeatherError = (element) => {
         element.innerHTML = `
             <div class="weather-error">
-                <i class="fas fa-exclamation-circle"></i>
+                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
                 <p>Unable to load weather data</p>
             </div>
         `;
@@ -206,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         forecastContainer.innerHTML = `
             <div class="weather-error">
-                <i class="fas fa-exclamation-circle"></i>
+                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
                 <p>Unable to load forecast data</p>
             </div>
         `;
@@ -225,16 +253,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Helper function to get one forecast entry per day
     const getDailyForecasts = (forecastList) => {
-        // This simplified version just returns the list directly since our mock data
-        // is already set up with one entry per day
-        // In production with actual API data, you'd need to filter the list to get one entry per day
+        // In a real implementation with actual API data,
+        // this would filter the list to get one entry per day
+        
+        // This is a simplified version for the mock data
+        // which is already set up with one entry per day
         return forecastList;
     };
     
     // Add photo weather tips based on forecast
-    const updateWeatherTips = (data) => {
-        // This would add dynamic tips based on the forecast
-        // Not implemented in this demo version
+    const updateWeatherTips = (forecast) => {
+        const tipsContainer = document.querySelector('.weather-tips ul');
+        if (!tipsContainer) return;
+        
+        // In a full implementation, this would analyze the forecast
+        // and provide dynamic photography tips based on the weather
     };
     
     // Initialize weather data if we're on the scheduling page

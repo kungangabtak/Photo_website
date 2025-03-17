@@ -1,26 +1,21 @@
 // Main JavaScript file for UIUC Grad Photos website
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+    // Set active navigation link based on current page
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('.nav-links a');
     
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-    }
-    
-    // Close mobile menu when a link is clicked
-    const navItems = document.querySelectorAll('.nav-links a');
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            if (hamburger.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        
+        // Check if link href matches current page
+        const linkPage = link.getAttribute('href');
+        if (currentPage === linkPage || 
+            // Handle index page edge cases
+            (currentPage === '' && linkPage === 'index.html') ||
+            (currentPage === '/' && linkPage === 'index.html')) {
+            link.classList.add('active');
+        }
     });
     
     // Smooth scroll for anchor links
@@ -265,36 +260,167 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Form validation for booking form
     const bookingForm = document.getElementById('booking-form');
+
     if (bookingForm) {
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Initialize form validation state tracking
+        const formState = {
+            isSubmitting: false,
+            fieldStatus: {}
+        };
+        
+        // Add input event listeners to provide real-time validation feedback
+        const inputFields = bookingForm.querySelectorAll('input, select, textarea');
+        inputFields.forEach(field => {
+            // Skip checkboxes for the real-time validation
+            if (field.type === 'checkbox') return;
             
-            // Basic validation
+            field.addEventListener('input', function() {
+                validateField(this);
+            });
+            
+            field.addEventListener('blur', function() {
+                validateField(this, true);
+            });
+        });
+        
+        // Function to validate a single field
+        function validateField(field, showError = false) {
+            const fieldName = field.name;
+            let isValid = true;
+            let errorMessage = '';
+            
+            // Clear existing error
+            clearFieldError(field);
+            
+            // Required field validation
+            if (field.hasAttribute('required') && !field.value.trim()) {
+                isValid = false;
+                errorMessage = 'This field is required';
+            }
+            
+            // Email validation
+            if (fieldName === 'email' && field.value.trim()) {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(field.value.trim())) {
+                    isValid = false;
+                    errorMessage = 'Please enter a valid email address';
+                }
+            }
+            
+            // Phone validation
+            if (fieldName === 'phone' && field.value.trim()) {
+                const phonePattern = /^[0-9()\-\s+]{10,15}$/;
+                if (!phonePattern.test(field.value.replace(/\s/g, ''))) {
+                    isValid = false;
+                    errorMessage = 'Please enter a valid phone number';
+                }
+            }
+            
+            // Date validation for future dates only
+            if ((fieldName === 'session-date' || fieldName === 'graduation-date') && field.value) {
+                const selectedDate = new Date(field.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (selectedDate < today) {
+                    isValid = false;
+                    errorMessage = 'Please select a future date';
+                }
+            }
+            
+            // Update form state
+            formState.fieldStatus[fieldName] = isValid;
+            
+            // Show error if requested and field is invalid
+            if (showError && !isValid) {
+                displayFieldError(field, errorMessage);
+            }
+            
+            return isValid;
+        }
+        
+        // Function to clear field error
+        function clearFieldError(field) {
+            field.classList.remove('error');
+            
+            // Remove any existing error message
+            const errorElement = field.parentNode.querySelector('.field-error');
+            if (errorElement) {
+                errorElement.remove();
+            }
+        }
+        
+        // Function to display field error
+        function displayFieldError(field, message) {
+            field.classList.add('error');
+            
+            // Add error message
+            const errorElement = document.createElement('p');
+            errorElement.className = 'field-error';
+            errorElement.textContent = message;
+            field.parentNode.appendChild(errorElement);
+        }
+        
+        // Function to check if all required fields are valid
+        function isFormValid() {
             let isValid = true;
             const requiredFields = bookingForm.querySelectorAll('[required]');
             
             requiredFields.forEach(field => {
-                if (!field.value.trim()) {
+                if (!validateField(field, true)) {
                     isValid = false;
-                    field.classList.add('error');
-                } else {
-                    field.classList.remove('error');
                 }
             });
             
-            // Email validation
-            const emailField = document.getElementById('email');
-            if (emailField && emailField.value) {
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(emailField.value)) {
-                    isValid = false;
-                    emailField.classList.add('error');
-                }
+            return isValid;
+        }
+        
+        // Form submission handler
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Prevent double submission
+            if (formState.isSubmitting) return;
+            
+            // Clear any previous form error
+            const existingErrorMessage = bookingForm.querySelector('.form-error-message');
+            if (existingErrorMessage) {
+                existingErrorMessage.remove();
             }
             
-            if (isValid) {
-                // In a real implementation, you would submit the form data to a server
-                // For this demo, we'll show a success message
+            // Validate all fields
+            if (!isFormValid()) {
+                // Show form error message
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'form-error-message';
+                errorMessage.innerHTML = 'Please correct the errors in the form before submitting.';
+                bookingForm.prepend(errorMessage);
+                
+                // Scroll to the top of the form
+                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            
+            // Set submitting state
+            formState.isSubmitting = true;
+            
+            // Show loading state
+            const submitButton = bookingForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitButton.disabled = true;
+            
+            // Collect form data
+            const formData = new FormData(bookingForm);
+            const formDataObj = Object.fromEntries(formData.entries());
+            
+            // In a real implementation, you would send this data to a server
+            // For this demo, we'll simulate a server request with a timeout
+            setTimeout(() => {
+                // Reset submitting state
+                formState.isSubmitting = false;
+                
+                // For demo purposes, show success message
                 const formContainer = document.querySelector('.form-container');
                 formContainer.innerHTML = `
                     <div class="success-message">
@@ -302,68 +428,25 @@ document.addEventListener('DOMContentLoaded', function() {
                             <i class="fas fa-check-circle"></i>
                         </div>
                         <h2>Booking Request Received!</h2>
-                        <p>Thank you for scheduling your graduation photoshoot. We'll send a confirmation email within 24 hours.</p>
+                        <p>Thank you for scheduling your photography session. We'll send a confirmation email within 24 hours.</p>
                         <p>If you have any questions, feel free to contact us at <strong>contact@uiucgradphotos.com</strong>.</p>
                         <a href="index.html" class="btn primary-btn">Return to Home</a>
+                        <a href="javascript:void(0)" id="new-booking" class="btn secondary-btn">Book Another Session</a>
                     </div>
                 `;
-            } else {
-                // Show error message
-                let errorMessage = document.querySelector('.error-message');
-                if (!errorMessage) {
-                    errorMessage = document.createElement('div');
-                    errorMessage.className = 'error-message';
-                    errorMessage.innerHTML = 'Please fill out all required fields correctly.';
-                    bookingForm.prepend(errorMessage);
+                
+                // Add listener for the "Book Another Session" button
+                const newBookingBtn = document.getElementById('new-booking');
+                if (newBookingBtn) {
+                    newBookingBtn.addEventListener('click', function() {
+                        // Reload the page to reset the form
+                        window.location.reload();
+                    });
                 }
-            }
-        });
-    }
-    
-    // Current date for graduation date field minimum
-    const graduationDateField = document.getElementById('graduation-date');
-    const sessionDateField = document.getElementById('session-date');
-    
-    if (graduationDateField && sessionDateField) {
-        const today = new Date();
-        const todayFormatted = today.toISOString().split('T')[0];
-        
-        graduationDateField.setAttribute('min', todayFormatted);
-        sessionDateField.setAttribute('min', todayFormatted);
-    }
-    
-    // Dynamic session time based on date (example: adjust golden hour)
-    if (sessionDateField) {
-        sessionDateField.addEventListener('change', function() {
-            const sessionTimeField = document.getElementById('session-time');
-            if (!sessionTimeField) return;
-            
-            const selectedDate = new Date(this.value);
-            const month = selectedDate.getMonth();
-            
-            // Update golden hour option text based on season
-            const options = sessionTimeField.options;
-            for (let i = 0; i < options.length; i++) {
-                if (options[i].value === 'golden-hour') {
-                    // Winter (Dec-Feb)
-                    if (month >= 11 || month <= 1) {
-                        options[i].text = 'Golden Hour (4:00 PM - 5:00 PM)';
-                    }
-                    // Spring (Mar-May)
-                    else if (month >= 2 && month <= 4) {
-                        options[i].text = 'Golden Hour (6:30 PM - 7:30 PM)';
-                    }
-                    // Summer (Jun-Aug)
-                    else if (month >= 5 && month <= 7) {
-                        options[i].text = 'Golden Hour (7:30 PM - 8:30 PM)';
-                    }
-                    // Fall (Sep-Nov)
-                    else {
-                        options[i].text = 'Golden Hour (5:30 PM - 6:30 PM)';
-                    }
-                    break;
-                }
-            }
+                
+                // Scroll to the top of the success message
+                formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 1500);
         });
     }
     
