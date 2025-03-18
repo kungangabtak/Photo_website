@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Book your UIUC graduation photo session or event photography. Choose your date, time, and iconic campus location with real-time weather forecasts.">
+    <meta name="description" content="Book your UIUC graduation photo session or event photography. Quick and easy booking process.">
     <meta name="keywords" content="schedule UIUC photography, book graduation photos, campus photographer appointment, Illinois event photographer booking">
     <meta property="og:title" content="Book Your Event Photography | UIUC Event Photos">
-    <meta property="og:description" content="Schedule your UIUC graduation photos or event photography with our convenient booking system and weather forecast integration.">
+    <meta property="og:description" content="Schedule your UIUC graduation photos or event photography with our quick and easy booking process.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://uiuceventphotos.com/schedule.html">
     <title>Book Your Event Photography | UIUC Event Photos</title>
@@ -42,129 +42,120 @@
     <main class="schedule-container">
         <section class="page-header">
             <h1>Book Your Event Photography</h1>
-            <p>Select your preferred date, time, and location for your UIUC event or graduation photos</p>
+            <p>Tell us what you're looking for and we'll help you create the perfect photo session</p>
         </section>
 
-        <div class="schedule-content">
-            <section class="booking-form-section">
-                <div class="form-container">
-                    <h2>Schedule Your Session</h2>
-                    <form id="booking-form" class="booking-form">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-type">Event Type</label>
-                            <select id="event-type" name="event-type" required>
-                                <option value="">Select event type</option>
-                                <option value="graduation">Graduation Photos</option>
-                                <option value="formal">Formal / Semi-Formal</option>
-                                <option value="greek">Greek Life Event</option>
-                                <option value="club">Club / Organization</option>
-                                <option value="sports">Sports Event</option>
-                                <option value="performance">Performance / Show</option>
-                                <option value="other">Other (specify below)</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="graduation-date-group">
-                            <label for="graduation-date">Graduation Date (if applicable)</label>
-                            <input type="date" id="graduation-date" name="graduation-date">
-                        </div>
-                        <div class="form-group">
-                            <label for="package">Photo Package</label>
-                            <select id="package" name="package" required>
-                                <option value="">Select a package</option>
-                                <option value="individual-standard">Individual Standard ($100) - 1 hour, with editing</option>
-                                <option value="event-medium">Medium Event ($200) - Up to 2 hours, with editng</option>
-                                <option value="event-large">Large Event ($300) - 4 hours, with editing</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="session-date">Preferred Session Date</label>
-                            <input type="date" id="session-date" name="session-date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="session-time">Preferred Time</label>
-                            <select id="session-time" name="session-time" required>
-                                <option value="">Select a time</option>
-                                <option value="morning">Morning (9:00 AM - 11:00 AM)</option>
-                                <option value="midday">Midday (11:00 AM - 1:00 PM)</option>
-                                <option value="afternoon">Afternoon (1:00 PM - 3:00 PM)</option>
-                                <option value="golden-hour">Golden Hour (Depends on season)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="location">Preferred Campus Location</label>
-                            <select id="location" name="location" required>
-                                <option value="">Select a location</option>
-                                <option value="quad">Main Quad</option>
-                                <option value="union">Illini Union</option>
-                                <option value="bardeen">Bardeen Quad</option>
-                                <option value="arboretum">Arboretum</option>
-                                <option value="krannert">Krannert Center</option>
-                                <option value="alma">Alma Mater</option>
-                                <option value="custom">Custom Location (specify below)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="custom-location">Custom Location or Additional Details</label>
-                            <textarea id="custom-location" name="custom-location" rows="3"></textarea>
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="terms" name="terms" required>
-                            <label for="terms">I agree to the <a href="#">terms and conditions</a></label>
-                        </div>
-                        <button type="submit" class="btn primary-btn submit-btn">Book Your Session</button>
-                    </form>
-                </div>
-            </section>
-
-            <section class="weather-section">
-                <div class="weather-container">
-                    <h2>Champaign-Urbana Weather</h2>
-                    <p class="weather-intro">Plan your perfect photo day with our live weather forecast</p>
+        <div class="interest-content">
+            <!-- Main interest form section -->
+            <div class="form-container">
+                <h2>Quick Interest Form</h2>
+                <p class="form-intro">We'll contact you within 24 hours to discuss details and confirm your session</p>
+                
+                <form id="interest-form" class="interest-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
                     
-                    <div class="current-weather">
-                        <h3>Current Conditions</h3>
-                        <div class="weather-card" id="current-weather-card">
-                            <div class="weather-icon">
-                                <i class="fas fa-sync fa-spin"></i>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="event-type">What are you interested in?</label>
+                        <select id="event-type" name="event-type" required>
+                            <option value="">Select event type</option>
+                            <option value="graduation">Graduation Photos</option>
+                            <option value="formal">Formal / Semi-Formal</option>
+                            <option value="greek">Greek Life Event</option>
+                            <option value="club">Club / Organization</option>
+                            <option value="sports">Sports Event</option>
+                            <option value="performance">Performance / Show</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timeframe">When are you thinking?</label>
+                        <select id="timeframe" name="timeframe" required>
+                            <option value="">Select a timeframe</option>
+                            <option value="asap">As soon as possible</option>
+                            <option value="within-2-weeks">Within 2 weeks</option>
+                            <option value="within-month">Within a month</option>
+                            <option value="graduation-season">Around graduation (May)</option>
+                            <option value="flexible">I'm flexible</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="package">Preferred Package</label>
+                        <div class="package-options">
+                            <div class="package-option">
+                                <input type="radio" id="package-standard" name="package" value="individual-standard">
+                                <label for="package-standard">
+                                    <span class="package-name">Individual Standard</span>
+                                    <span class="package-price">$100</span>
+                                    <span class="package-desc">1 hour session with editing</span>
+                                </label>
                             </div>
-                            <div class="weather-details">
-                                <p class="temperature">Loading...</p>
-                                <p class="conditions">Please wait</p>
-                                <p class="humidity">Getting weather data</p>
+                            
+                            <div class="package-option">
+                                <input type="radio" id="package-medium" name="package" value="event-medium">
+                                <label for="package-medium">
+                                    <span class="package-name">Medium Event</span>
+                                    <span class="package-price">$200</span>
+                                    <span class="package-desc">Up to 2 hours with editing</span>
+                                </label>
+                            </div>
+                            
+                            <div class="package-option">
+                                <input type="radio" id="package-large" name="package" value="event-large">
+                                <label for="package-large">
+                                    <span class="package-name">Large Event</span>
+                                    <span class="package-price">$300</span>
+                                    <span class="package-desc">4 hours with editing</span>
+                                </label>
+                            </div>
+                            
+                            <div class="package-option">
+                                <input type="radio" id="package-unsure" name="package" value="unsure" checked>
+                                <label for="package-unsure">
+                                    <span class="package-name">Not Sure Yet</span>
+                                    <span class="package-desc">Let's discuss options</span>
+                                </label>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="forecast-weather">
-                        <h3>7-Day Forecast</h3>
-                        <div class="forecast-container" id="forecast-container">
-                            <p class="loading-text">Loading forecast data...</p>
-                        </div>
+                    <div class="form-group">
+                        <label for="notes">Anything specific you'd like to share? (Optional)</label>
+                        <textarea id="notes" name="notes" rows="3"></textarea>
                     </div>
                     
-                    <div class="weather-tips">
-                        <h3>Photo Weather Tips</h3>
-                        <ul>
-                            <li><i class="fas fa-sun"></i> <strong>Sunny days:</strong> Great for vibrant photos, but avoid harsh midday sun</li>
-                            <li><i class="fas fa-cloud"></i> <strong>Overcast days:</strong> Perfect for even lighting and no harsh shadows</li>
-                            <li><i class="fas fa-cloud-sun"></i> <strong>Golden hour:</strong> The hour after sunrise or before sunset for magical lighting</li>
-                            <li><i class="fas fa-umbrella"></i> <strong>Rain plan:</strong> We have backup indoor locations if needed</li>
-                        </ul>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the <a href="#">terms and conditions</a></label>
                     </div>
-                </div>
-            </section>
+                    
+                    <button type="submit" class="btn primary-btn submit-btn">Check Availability <i class="fas fa-arrow-right"></i></button>
+                    
+                    <p class="form-note">
+                        <i class="fas fa-info-circle"></i>
+                        No payment required now - just checking availability for you
+                    </p>
+                    
+                    <div class="detailed-booking-link">
+                        <p>Already know exactly what you want?</p>
+                        <a href="detailed-booking.html" class="btn secondary-btn">Go to Detailed Booking Form</a>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <section class="booking-info">
@@ -234,6 +225,6 @@
     </footer>
 
     <script src="js/script.js"></script>
-    <script src="js/weather.js"></script>
+    <script src="js/schedule.js"></script>
 </body>
 </html>
