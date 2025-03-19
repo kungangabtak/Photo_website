@@ -6,10 +6,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const allToggleContents = document.querySelectorAll('.toggle-content');
     allToggleContents.forEach(content => {
         content.style.display = 'none';
+        // Set initial styles for smooth transitions
+        content.style.overflow = 'hidden';
+        content.style.maxHeight = '0';
+        content.style.transition = 'max-height 0.3s ease-out';
     });
     
     // Toggle functionality for sidebar sections
     const toggleHeaders = document.querySelectorAll('.toggle-header');
+    
+    // Function to close a specific toggle section
+    function closeToggleSection(header) {
+        header.classList.remove('active');
+        const sectionId = header.getAttribute('data-section');
+        const contentSection = document.getElementById(`${sectionId}-content`);
+        
+        // Collapse
+        contentSection.style.maxHeight = '0';
+        
+        // Add event listener for transition end to hide element completely
+        const transitionEnd = () => {
+            if (contentSection.style.maxHeight === '0px') {
+                contentSection.style.display = 'none';
+            }
+            contentSection.removeEventListener('transitionend', transitionEnd);
+        };
+        contentSection.addEventListener('transitionend', transitionEnd);
+        
+        // Change icon to plus
+        const icon = header.querySelector('.toggle-icon i');
+        icon.classList.remove('fa-minus');
+        icon.classList.add('fa-plus');
+    }
+    
+    // Function to close all toggle sections
+    function closeAllToggleSections() {
+        toggleHeaders.forEach(header => {
+            closeToggleSection(header);
+        });
+    }
     
     toggleHeaders.forEach(header => {
         const sectionId = header.getAttribute('data-section');
@@ -17,32 +52,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add click event
         header.addEventListener('click', () => {
-            // Toggle active class
-            header.classList.toggle('active');
+            // Check if this section is already active
+            const isActive = header.classList.contains('active');
             
-            // Toggle content visibility with animation
-            if (contentSection.style.display === 'block') {
-                // Slide up
-                contentSection.style.maxHeight = contentSection.scrollHeight + 'px';
-                setTimeout(() => {
-                    contentSection.style.maxHeight = '0';
-                    setTimeout(() => {
-                        contentSection.style.display = 'none';
-                    }, 300);
-                }, 10);
+            // Close all sections first
+            closeAllToggleSections();
+            
+            // If this section wasn't active before, open it
+            if (!isActive) {
+                // Toggle active class
+                header.classList.add('active');
                 
-                // Change icon to plus
-                const icon = header.querySelector('.toggle-icon i');
-                icon.classList.remove('fa-minus');
-                icon.classList.add('fa-plus');
-            } else {
-                // Slide down
+                // Expand
                 contentSection.style.display = 'block';
-                contentSection.style.maxHeight = '0';
-                setTimeout(() => {
-                    contentSection.style.maxHeight = contentSection.scrollHeight + 'px';
-                    contentSection.style.overflow = 'visible';
-                }, 10);
+                // Force browser to calculate scrollHeight by accessing the property
+                const height = contentSection.scrollHeight;
+                contentSection.style.maxHeight = height + 'px';
                 
                 // Change icon to minus
                 const icon = header.querySelector('.toggle-icon i');

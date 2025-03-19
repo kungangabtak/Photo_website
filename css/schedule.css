@@ -606,3 +606,226 @@ textarea.error {
         width: 100%;
     }
 }
+
+.booking-sidebar {
+    position: relative;
+    flex: 1.5;
+}
+
+.toggle-content {
+    display: none;
+    padding: 20px;
+    border-top: 1px solid var(--light-gray);
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+    box-shadow: var(--box-shadow);
+}
+
+/* Sidebar toggle sections */
+.sidebar-toggle-section {
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    overflow: visible;
+    position: relative;
+}
+
+.toggle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: white;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: var(--border-radius);
+}
+
+.toggle-header:hover {
+    background-color: var(--light-color);
+}
+
+.toggle-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.toggle-header h3 i {
+    margin-right: 12px;
+    color: var(--secondary-color);
+}
+
+.toggle-icon {
+    color: var(--secondary-color);
+    transition: transform 0.3s ease;
+}
+
+.toggle-header.active .toggle-icon i {
+    transform: rotate(45deg);
+}
+
+/* Toggle content sections */
+.toggle-content {
+    display: none;
+    padding: 25px 20px;
+    border-top: 1px solid var(--light-gray);
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/* Weather section styling */
+.weather-intro {
+    text-align: center;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    color: var(--gray-color);
+}
+
+.current-weather, 
+.forecast-weather,
+.weather-tips {
+    margin-bottom: 25px;
+}
+
+.current-weather h4,
+.forecast-weather h4,
+.weather-tips h4 {
+    font-size: 1.05rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.weather-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--light-color);
+    padding: 18px;
+    border-radius: var(--border-radius);
+}
+
+.weather-icon {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    margin-right: 20px;
+}
+
+.weather-details .temperature {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.weather-details .conditions {
+    margin-bottom: 5px;
+}
+
+.forecast-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 10px;
+}
+
+.forecast-day {
+    min-width: 85px;
+    background-color: var(--light-color);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.forecast-date {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.forecast-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--secondary-color);
+}
+
+.weather-tips ul {
+    padding-left: 10px;
+    list-style-type: none;
+}
+
+.weather-tips li {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    padding-left: 25px;
+    position: relative;
+}
+
+.weather-tips li i {
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+    top: 3px;
+}
+
+/* Locations grid styling */
+.location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.location-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.location-item img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    margin-bottom: 8px;
+}
+
+.location-item span {
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* FAQ items styling */
+.faq-item {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.faq-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.faq-item h4 {
+    margin: 0 0 8px 0;
+    color: var(--primary-color);
+    font-size: 1.05rem;
+}
+
+.faq-item p {
+    margin: 0;
+    color: var(--gray-color);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
