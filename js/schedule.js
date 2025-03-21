@@ -78,45 +78,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Terms and Conditions Modal Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get modal elements
-        const termsLink = document.getElementById('terms-link');
-        const termsModal = document.getElementById('terms-modal');
-        const closeModal = document.querySelector('.close-modal');
+    const termsLink = document.getElementById('terms-link');
+    const termsModal = document.getElementById('terms-modal');
+    const closeModal = document.querySelector('.close-modal');
+    
+    if (termsLink && termsModal) {
+        // Open modal when terms link is clicked
+        termsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            termsModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+        });
         
-        if (termsLink && termsModal) {
-            // Open modal when terms link is clicked
-            termsLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                termsModal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
-            });
-            
-            // Close modal when X is clicked
-            if (closeModal) {
-                closeModal.addEventListener('click', function() {
-                    termsModal.classList.remove('active');
-                    document.body.style.overflow = ''; // Restore scrolling
-                });
-            }
-            
-            // Close modal when clicking outside content
-            termsModal.addEventListener('click', function(e) {
-                if (e.target === termsModal) {
-                    termsModal.classList.remove('active');
-                    document.body.style.overflow = ''; // Restore scrolling
-                }
-            });
-            
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && termsModal.classList.contains('active')) {
-                    termsModal.classList.remove('active');
-                    document.body.style.overflow = ''; // Restore scrolling
-                }
+        // Close modal when X is clicked
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                termsModal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
             });
         }
-    });
+        
+        // Close modal when clicking outside content
+        termsModal.addEventListener('click', function(e) {
+            if (e.target === termsModal) {
+                termsModal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && termsModal.classList.contains('active')) {
+                termsModal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        });
+    }
     
     // Interest form submission handler
     const interestForm = document.getElementById('interest-form');
@@ -285,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Simulate form submission
             // Get the form data
-            const formData = new FormData(interestForm);
+            const formData = new FormData(detailedForm);
 
             // Send the AJAX request to your server
             fetch('process-booking-form.php', {
@@ -300,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 // Handle successful response
-                const formContainer = interestForm.closest('.form-container');
+                const formContainer = detailedForm.closest('.form-container');
                 
                 // Replace with success message
                 formContainer.innerHTML = `
@@ -308,10 +305,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="success-icon">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                        <h2>Request Sent Successfully!</h2>
-                        <p>Thanks for your interest in our photography services.</p>
-                        <p>We'll be in touch within 24 hours to discuss your session and confirm details.</p>
-                        <p>Check your email for a confirmation message.</p>
+                        <h2>Booking Successful!</h2>
+                        <p>Thanks for booking your photography session with us.</p>
+                        <p>We'll send a confirmation email with all the details shortly.</p>
+                        <p>If you have any questions, please contact us.</p>
                     </div>
                 `;
                 
@@ -324,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Re-enable the submit button
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Check Availability <i class="fas fa-arrow-right"></i>';
+                submitBtn.innerHTML = originalBtnText;
                 
                 // Show error message
                 let errorMsg = document.getElementById('form-error-message');
@@ -333,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorMsg.id = 'form-error-message';
                     errorMsg.className = 'error-message';
                     errorMsg.textContent = 'There was a problem submitting your form. Please try again.';
-                    interestForm.prepend(errorMsg);
+                    detailedForm.prepend(errorMsg);
                 }
             });
         });
