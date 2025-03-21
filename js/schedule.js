@@ -76,6 +76,47 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Terms and Conditions Modal Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get modal elements
+        const termsLink = document.getElementById('terms-link');
+        const termsModal = document.getElementById('terms-modal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        if (termsLink && termsModal) {
+            // Open modal when terms link is clicked
+            termsLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                termsModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+            });
+            
+            // Close modal when X is clicked
+            if (closeModal) {
+                closeModal.addEventListener('click', function() {
+                    termsModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                });
+            }
+            
+            // Close modal when clicking outside content
+            termsModal.addEventListener('click', function(e) {
+                if (e.target === termsModal) {
+                    termsModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && termsModal.classList.contains('active')) {
+                    termsModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore scrolling
+                }
+            });
+        }
+    });
     
     // Interest form submission handler
     const interestForm = document.getElementById('interest-form');
@@ -122,9 +163,22 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             
-            // Simulate form submission (would be an actual AJAX request in production)
-            setTimeout(() => {
-                // Get the form container
+            // Get the form data
+            const formData = new FormData(interestForm);
+
+            // Send the AJAX request to your server
+            fetch('process-interest-form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle successful response
                 const formContainer = interestForm.closest('.form-container');
                 
                 // Replace with success message
@@ -142,7 +196,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Scroll to success message
                 formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 1500);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error submitting form:', error);
+                
+                // Re-enable the submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Check Availability <i class="fas fa-arrow-right"></i>';
+                
+                // Show error message
+                let errorMsg = document.getElementById('form-error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('div');
+                    errorMsg.id = 'form-error-message';
+                    errorMsg.className = 'error-message';
+                    errorMsg.textContent = 'There was a problem submitting your form. Please try again.';
+                    interestForm.prepend(errorMsg);
+                }
+            });
         });
     }
     
@@ -212,9 +284,23 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
             
             // Simulate form submission
-            setTimeout(() => {
-                // Get the form container
-                const formContainer = detailedForm.closest('.form-container');
+            // Get the form data
+            const formData = new FormData(interestForm);
+
+            // Send the AJAX request to your server
+            fetch('process-booking-form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle successful response
+                const formContainer = interestForm.closest('.form-container');
                 
                 // Replace with success message
                 formContainer.innerHTML = `
@@ -222,16 +308,34 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="success-icon">
                             <i class="fas fa-check-circle"></i>
                         </div>
-                        <h2>Booking Confirmed!</h2>
-                        <p>Your photography session has been scheduled successfully.</p>
-                        <p>We've sent a confirmation email with all the details to your inbox.</p>
-                        <p>If you need to make any changes, please contact us at (217) 555-1234.</p>
+                        <h2>Request Sent Successfully!</h2>
+                        <p>Thanks for your interest in our photography services.</p>
+                        <p>We'll be in touch within 24 hours to discuss your session and confirm details.</p>
+                        <p>Check your email for a confirmation message.</p>
                     </div>
                 `;
                 
                 // Scroll to success message
                 formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 1500);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error submitting form:', error);
+                
+                // Re-enable the submit button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Check Availability <i class="fas fa-arrow-right"></i>';
+                
+                // Show error message
+                let errorMsg = document.getElementById('form-error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('div');
+                    errorMsg.id = 'form-error-message';
+                    errorMsg.className = 'error-message';
+                    errorMsg.textContent = 'There was a problem submitting your form. Please try again.';
+                    interestForm.prepend(errorMsg);
+                }
+            });
         });
     }
     
