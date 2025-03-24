@@ -29,17 +29,28 @@ try {
     $groupSize = $_POST['group-size'] ?? '';
     $sessionDate = $_POST['session-date'] ?? '';
     $sessionTime = $_POST['session-time'] ?? '';
-    $location = $_POST['location'] ?? '';
-    $customLocation = $_POST['custom-location'] ?? '';
     
-    // Prepare SQL statement
+    // Combine location fields into custom_location since there's no location column
+    $selectedLocation = $_POST['location'] ?? '';
+    $customLocationDetails = $_POST['custom-location'] ?? '';
+    
+    if ($selectedLocation === 'custom') {
+        $combinedLocation = $customLocationDetails;
+    } else {
+        $combinedLocation = $selectedLocation;
+        if (!empty($customLocationDetails)) {
+            $combinedLocation .= " - Additional details: " . $customLocationDetails;
+        }
+    }
+    
+    // Prepare SQL statement - REMOVED location column
     $stmt = $conn->prepare("INSERT INTO booking_submissions 
                           (name, email, phone, event_type, graduation_date, group_size, 
-                           session_date, session_time, location, custom_location) 
+                           session_date, session_time, custom_location) 
                           VALUES (:name, :email, :phone, :event_type, :graduation_date, :group_size,
-                                  :session_date, :session_time, :location, :custom_location)");
+                                  :session_date, :session_time, :custom_location)");
     
-    // Bind parameters
+    // Bind parameters - REMOVED location parameter
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':phone', $phone);
@@ -48,8 +59,7 @@ try {
     $stmt->bindParam(':group_size', $groupSize);
     $stmt->bindParam(':session_date', $sessionDate);
     $stmt->bindParam(':session_time', $sessionTime);
-    $stmt->bindParam(':location', $location);
-    $stmt->bindParam(':custom_location', $customLocation);
+    $stmt->bindParam(':custom_location', $combinedLocation);
     
     // Execute statement
     $stmt->execute();
@@ -74,12 +84,8 @@ try {
     
     $message .= "Session Date: $sessionDate\n";
     $message .= "Session Time: $sessionTime\n";
-    $message .= "Location: $location\n";
+    $message .= "Location: $combinedLocation\n";
     
-    if (!empty($customLocation)) {
-        $message .= "Custom Location Details: $customLocation\n";
-    }
-
     // Add submission timestamp
     $message .= "\nSubmitted on: " . date("Y-m-d H:i:s");
     $message .= "\nForm Type: Detailed Booking Form";
