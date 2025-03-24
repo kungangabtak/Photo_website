@@ -1,0 +1,175 @@
+/* Book Now Page Specific Styles */
+
+.booking-options-container {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.booking-options {
+    display: flex;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.booking-option {
+    flex: 1;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 40px 30px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.booking-option:hover {
+    transform: translateY(-10px);
+}
+
+.option-icon {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+.booking-option h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.booking-option p {
+    margin-bottom: 20px;
+    color: var(--gray-color);
+}
+
+.option-features {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.option-features li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.option-features li i {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    color: var(--secondary-color);
+}
+
+.booking-option .btn {
+    margin-top: 15px;
+}
+
+.booking-info-section {
+    background-color: var(--light-color);
+    padding: 60px 0;
+}
+
+.testimonial-section {
+    padding: 60px 0;
+}
+
+.faq-section {
+    background-color: var(--light-color);
+    padding: 60px 0;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 20px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.faq-question:hover {
+    background-color: var(--light-color);
+}
+
+.faq-question h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--dark-color);
+}
+
+.faq-question i {
+    color: var(--secondary-color);
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question {
+    background-color: rgba(232, 74, 39, 0.05);
+}
+
+.faq-answer {
+    padding: 0 20px 20px;
+    background-color: white;
+}
+
+.cta-section {
+    background-color: var(--primary-color);
+    padding: 60px 0;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.cta-content h2 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 2rem;
+}
+
+.cta-content p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .booking-options {
+        flex-direction: column;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 10px;
+    }
+}

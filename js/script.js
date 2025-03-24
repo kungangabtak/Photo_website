@@ -1,11 +1,31 @@
 // Main JavaScript file for UIUC Grad Photos website
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Hamburger menu functionality
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', function() {
+        // Toggle active class on nav menu
+        navLinks.classList.toggle('active');
+        
+        // Toggle hamburger animation
+        this.classList.toggle('active');
+    });
+    
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+        });
+    });
+    
     // Set active navigation link based on current page
     const currentPage = window.location.pathname.split('/').pop();
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const navLinksItems = document.querySelectorAll('.nav-links a');
     
-    navLinks.forEach(link => {
+    navLinksItems.forEach(link => {
         link.classList.remove('active');
         
         // Check if link href matches current page

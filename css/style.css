@@ -524,6 +524,17 @@ footer {
         min-width: calc(50% - 30px);
         flex: 0 0 calc(50% - 30px);
     }
+    .hero-image {
+        width: 100%;
+        margin-top: 30px;
+    }
+    
+    .vertical-carousel {
+        height: 400px;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 768px) {
@@ -566,6 +577,47 @@ footer {
     .footer-content {
         flex-direction: column;
         gap: 30px;
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    
+    /* Ensure mobile menu dropdown is visible and properly styled */
+    .nav-links {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+        z-index: 1000;
+    }
+    
+    /* Adjust vertical carousel height on mobile */
+    .vertical-carousel {
+        height: 350px;
+    }
+    .nav-links.active {
+        left: 0 !important; /* Add !important here */
+        z-index: 1000;
+    }
+    
+    /* Critical fix for hero image */
+    .hero-image {
+        display: block !important;
+        width: 100%;
     }
 }
 
@@ -658,8 +710,56 @@ footer {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
+    /* Existing media query styles remain unchanged */
+    
+    /* Improve hero image display on tablets */
+    .hero-image {
+        width: 100%;
+        margin-top: 30px;
+    }
+    
     .vertical-carousel {
         height: 400px;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Existing mobile styles remain unchanged */
+    
+    /* Hamburger menu animation */
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    
+    /* Ensure mobile menu dropdown is visible and properly styled */
+    .nav-links {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+        z-index: 1000;
+    }
+    
+    /* Adjust vertical carousel height on mobile */
+    .vertical-carousel {
+        height: 350px;
     }
 }
