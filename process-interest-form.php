@@ -2,6 +2,10 @@
 // Set headers for AJAX response
 header('Content-Type: application/json');
 
+// For debugging - log all form submissions
+$logFile = 'form_submissions.log';
+file_put_contents($logFile, date('Y-m-d H:i:s') . " - New form submission\n", FILE_APPEND);
+
 // Database connection parameters
 $host = 'localhost';
 $dbname = 'uiucitbp_uiucevent_forms'; // Replace with your actual database name
@@ -12,6 +16,9 @@ try {
     // Create database connection
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Log successful database connection
+    file_put_contents($logFile, "Database connection successful\n", FILE_APPEND);
     
     // Get form data
     $name = $_POST['name'] ?? '';
@@ -40,10 +47,9 @@ try {
     
     // Execute statement
     $stmt->execute();
-
-    // Add this inside the try block after $stmt->execute();
-    $to = "contact@uiuceventphotos.com"; // Change this to your actual email address
-    $subject = "New Photography Interest Form Submission";
+    
+    // Log successful database insertion
+    file_put_contents($logFile, "Database record inserted successfully\n", FILE_APPEND);
 
     // Build a complete message with all interest form fields
     $message = "Name: $name\n";
@@ -69,18 +75,31 @@ try {
     $message .= "\nSubmitted on: " . date("Y-m-d H:i:s");
     $message .= "\nForm Type: Quick Interest Form";
 
-    // Headers for better email handling
-    $headers = "From: UIUC Event Photos <noreply@uiuceventphotos.com>\r\n";
-    $headers .= "Reply-To: $email\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion();
+    // Log email content
+    file_put_contents($logFile, "Email content: \n$message\n", FILE_APPEND);
 
-    // Send the email
-    mail($to, $subject, $message, $headers);
+    // Recipient
+    $to = "contact@uiuceventphotos.com";
+    $subject = "New Photography Interest Form Submission";
+
+    // Modified headers - use the same address as "From" as you own on your domain
+    $headers = "From: contact@uiuceventphotos.com\r\n"; // Use your own domain email address
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+    // Attempt to send email and log result
+    $mailSent = mail($to, $subject, $message, $headers);
+    file_put_contents($logFile, "Mail send attempt result: " . ($mailSent ? "Success" : "Failed") . "\n\n", FILE_APPEND);
     
     // Return success response
     echo json_encode(['success' => true, 'message' => 'Form submitted successfully']);
     
 } catch(PDOException $e) {
+    // Log database error
+    file_put_contents($logFile, "Database error: " . $e->getMessage() . "\n\n", FILE_APPEND);
+    
     // Return error response
     echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     
