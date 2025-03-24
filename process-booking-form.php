@@ -47,7 +47,7 @@ try {
     // Execute statement
     $stmt->execute();
 
-    $to = "uiuceventphotos@gmail.com"; // Change this to your actual email address
+    $to = "contact@uiuceventphotos.com"; // Change this to your actual email address
     $subject = "New Photography Booking Inquiry";
 
     // Build a complete message with all form fields

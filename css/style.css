@@ -263,9 +263,14 @@ header {
 }
 
 .carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: center;
-    margin-top: 30px;
+    flex-direction: row;
+    gap: 10px;
+    z-index: 2;
 }
 
 .carousel-dot {
@@ -621,11 +626,11 @@ footer {
 
 .carousel-indicators {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
     z-index: 2;
 }
@@ -650,15 +655,6 @@ footer {
     .vertical-carousel {
         height: 500px;
         margin-top: 30px;
-    }
-    
-    .carousel-indicators {
-        bottom: 20px;
-        right: auto;
-        top: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        flex-direction: row;
     }
 }
 

@@ -42,7 +42,7 @@ try {
     $stmt->execute();
 
     // Add this inside the try block after $stmt->execute();
-    $to = "uiuceventsphotos@gmail.com"; // Change this to your actual email address
+    $to = "contact@uiuceventphotos.com"; // Change this to your actual email address
     $subject = "New Photography Interest Form Submission";
 
     // Build a complete message with all interest form fields
