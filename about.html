@@ -219,54 +219,5 @@
             <p>&copy; 2025 UIUC Event Photos by Kunga Ngabtak. All rights reserved.</p>
         </div>
     </footer>
-
-    <script src="js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        // Hamburger menu fix
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        
-        if (hamburger && navLinks) {
-            hamburger.addEventListener('click', function() {
-            console.log('Hamburger clicked');
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            });
-        }
-        });
-    </script>
-    
-    <style>
-        /* Add these styles directly in your HTML head */
-        @media (max-width: 768px) {
-        .hamburger.active .bar:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .hamburger.active .bar:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        
-        .hamburger.active .bar:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-        
-        .nav-links.active {
-            left: 0 !important;
-            z-index: 1000;
-        }
-        
-        .hero-image {
-            display: block !important;
-            width: 100%;
-        }
-        
-        .vertical-carousel {
-            height: 350px;
-            max-width: 100%;
-        }
-        }
-    </style>
 </body>
 </html>
